@@ -17,6 +17,14 @@ class ResponseHelper {
       $result[$resource['type']][$resource['id']] = $resource;
       return $result;
     }, []); 
+
+    if ($this->isJsonApiResourceId($this->data)) {
+      $this->included_resources_by_type[$this->data['type']][$this->data['id']] = $this->data;
+    } else if (is_array($this->data)) {
+      foreach ($this->data as $resource) {
+        $this->included_resources_by_type[$resource['type']][$resource['id']] = $resource;
+      }
+    }
   }
 
   /**
